@@ -1,0 +1,117 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg 
+              bg-body-tertiary bg-light mt-3 mb-3" 
+       data-bs-theme="light">
+    <div class="container-fluid">
+      <!-- Logó -->
+      <a class="navbar-brand me-3"
+        ui-sref="home"
+        data-bs-toggle="collapse"
+        data-bs-target=".navbar-collapse.show">
+        <img ng-src="media/image/navbar_logo.png" 
+             alt="Logo" 
+             height="40">
+      </a>    
+      <!-- Hamburger -->
+      <button class="navbar-toggler" 
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Összecsukható rész -->
+      <div class="collapse navbar-collapse" 
+           id="navbarSupportedContent">
+        <!-- FŐ MENÜ + KAPSZULA -->
+        <ul class="navbar-nav align-items-lg-center 
+                   position-relative w-100" 
+            sliding-capsule>
+          <!-- csúszó kapszula -->
+          <span class="nav-capsule"></span>
+
+          <li class="nav-item mx-lg-1">
+            <a class="nav-link"
+              ui-sref="home"
+              data-bs-toggle="collapse" 
+              data-bs-target=".navbar-collapse.show"
+              ng-class="{'active-capsule': $state.is('home')}">
+              {{lang.data.home_page}}
+            </a>
+          </li>
+
+          <li class="nav-item mx-lg-1">
+            <a class="nav-link"
+              ui-sref="our_projects"
+              data-bs-toggle="collapse" 
+              data-bs-target=".navbar-collapse.show"
+              ng-class="{'active-capsule': $state.is('our_projects')}">
+              {{lang.data.our_jobs}}
+            </a>
+          </li>
+
+          <li class="nav-item mx-lg-1">
+            <a class="nav-link"
+              ui-sref="aboutUs"
+              data-bs-toggle="collapse" 
+              data-bs-target=".navbar-collapse.show"
+              ng-class="{'active-capsule': $state.is('aboutUs')}">
+              {{lang.data.about_us}}
+            </a>
+          </li>
+
+          <li class="nav-item mx-lg-1">
+            <a class="nav-link"
+              ui-sref="contact"
+              data-bs-toggle="collapse" 
+              data-bs-target=".navbar-collapse.show"
+              ng-class="{'active-capsule': $state.is('contact')}">
+              {{lang.data.contact}}
+            </a>
+          </li>
+
+          <!-- Nyelvválasztó – jobbra tolva desktopon -->
+          <li class="nav-item dropdown lang-item mt-2 
+                     mt-lg-0 ms-lg-auto">
+            <a class="nav-link dropdown-toggle d-inline-flex 
+                      align-items-center"
+                role="button" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+              <img class="me-2" 
+                   height="24" 
+                   alt="flag"
+                  ng-src="./media/image/lang_pic/{{lang.available[lang.index].img}}">
+              <span class="text-capitalize">
+                {{lang.available[lang.index].local}}
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li ng-repeat="x in lang.available"
+                  ng-if="x.id !== lang.available[lang.index].id"
+                  ng-click="methods.languageChanged(x.id)"
+                  data-bs-toggle="collapse" 
+                  data-bs-target=".navbar-collapse.show">
+                <a class="dropdown-item d-flex align-items-center">
+                  <img class="me-2" 
+                       height="20" 
+                       alt="flag"
+                      ng-src="./media/image/lang_pic/{{x.img}}">
+                  <span class="text-capitalize me-1">
+                    {{x.name}}
+                  </span>
+                  <span ng-if="x.name !== x.local">
+                    ({{x.local}})
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

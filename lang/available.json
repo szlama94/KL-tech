@@ -1,0 +1,32 @@
+[{
+    "id":"de",
+    "type":"west",
+    "name":"german",
+    "local":"deutsch",
+    "img":"deu.png",
+    "valid":true
+},
+{
+    "id":"en",
+    "type":"west",
+    "name":"english",
+    "local":"english",
+    "img":"uk.png",
+    "valid":true
+},
+{
+    "id":"hu",
+    "type":"east",
+    "name":"hungarian",
+    "local":"magyar",
+    "img":"hun.png",
+    "valid":true
+},
+{
+    "id":"ro",
+    "type":"east",
+    "name":"romanian",
+    "local":"română",
+    "img":"ro.png",
+    "valid":true
+}]

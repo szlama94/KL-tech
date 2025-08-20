@@ -1,0 +1,78 @@
+<div class="container my-5">
+  <div class="mx-auto row text-center text-md-start" 
+       style="max-width: 1000px;">
+    <div class="card shadow rounded-4" 
+         style="transition: none; transform: none;">
+      <div class="card-body p-2 p-lg-5">
+        <h2 class="text-primary fw-bold mb-4 text-center">
+          {{ lang.data.contact }}
+        </h2>
+        <div class="row justify-content-center align-items-center gy-4 gx-4">
+          <!-- Bal oszlop: adatok -->
+          <div class="col-12 col-md-6 col-lg-5">
+            <ul class="list-unstyled fs-5 mb-0">
+              <li class="mb-3">
+                <i class="fa-solid fa-building me-2 text-warning"></i>
+                <strong> 
+                    {{ lang.data.company_name }}:
+                </strong> 
+                KLtechnik Kft.
+              </li>
+              <li class="mb-3">
+                <i class="fa-solid fa-location-dot me-2 text-warning"></i>
+                <strong>
+                    {{ lang.data.address }}:
+                </strong>
+                <a class="fs-5 text-dark text-decoration-none"
+                   target="_blank" 
+                   rel="noopener"
+                   ng-attr-aria-label="Útvonaltervezés: {{lang.data.address_footer}}"
+                   ng-href="https://www.google.com/maps/dir/?api=1&destination=Makó%2C%20Bárány%20utca%2086">
+                   {{ lang.data.address_footer }}
+                </a>
+              </li>
+              <li class="mb-3">
+                <i class="fa-solid fa-phone me-2 text-warning"></i>
+                <strong>
+                    {{ lang.data.phone }}:
+                </strong>
+                <a href="tel:+36308113733" 
+                   class="text-decoration-none text-dark fs-5">
+                  +36 30 811 3733
+                </a>
+              </li>
+              <li class="mb-3">
+                <i class="fa-solid fa-envelope me-2 text-warning"></i>
+                <strong>
+                    {{ lang.data.email }}:
+                </strong>
+                <a href="mailto:kltechnik99@gmail.com" 
+                   class="text-decoration-none text-dark fs-5">
+                  kltechnik99@gmail.com
+                </a>
+              </li>
+              <li>
+                <i class="fa-solid fa-receipt me-2 text-warning"></i>
+                <strong> 
+                    {{ lang.data.tax_number }}:
+                </strong> 
+                27475982-2-06
+              </li>
+            </ul>
+          </div>
+
+          <!-- Jobb oszlop: Lottie -->
+          <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <div class="lottie-wrap">
+                    <dotlottie-wc
+                    src="media/lottie/Contact Us.lottie"
+                    autoplay
+                    loop>
+                    </dotlottie-wc>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

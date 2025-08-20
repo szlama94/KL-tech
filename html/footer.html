@@ -1,0 +1,115 @@
+<div class="container">
+  <footer class="bg-light shadow px-4 px-md-5 
+                  mt-5 py-5 mb-3 rounded-5">
+    <div class="row text-center text-md-start">
+      <!-- Logó -->
+      <div class="col-12 col-sm-6 col-lg-3 mb-4 d-flex 
+                  justify-content-center align-items-center">
+        <img src="./media/image/footer_logo.png" 
+             alt="Logo" 
+           style="width:160px;height:auto;">
+      </div>
+      <!-- Elérhetőségek -->
+      <div class="col-12 col-sm-6 col-lg-3 mb-4 mt-5">
+        <h5 class="fw-bold mb-3 text-center text-md-start" 
+            style="color:#205d98">
+            {{lang.contact}}
+          </h5>
+        <ul class="list-unstyled mb-0 text-center text-md-start">
+          <li class="d-flex align-items-start justify-content-center 
+                     justify-content-md-start mb-3">
+            <span class="d-inline-flex justify-content-center 
+                         align-items-center
+                         bg-success text-white rounded-3 me-2 
+                         me-md-3 flex-shrink-0" 
+                  style="width:30px;height:30px;">
+              <i class="fa-solid fa-square-phone"></i>
+            </span>
+            <a href="tel:+36308113733" 
+               class="text-decoration-none text-dark fs-5">
+               +36 30 811 3733
+              </a>
+          </li>
+          <li class="d-flex align-items-start justify-content-center 
+                     justify-content-md-start mb-3">
+            <span class="d-inline-flex justify-content-center 
+                         align-items-center 
+                         bg-warning text-dark rounded-3 me-2 
+                         me-md-3 flex-shrink-0" 
+                  style="width:30px;height:30px;">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <a href="mailto:kltechnik99@gmail.com" 
+               class="text-decoration-none text-dark fs-5">
+               kltechnik99@gmail.com
+              </a>
+          </li>
+          <li class="d-flex align-items-start justify-content-center 
+                     justify-content-md-start">
+            <span class="d-inline-flex justify-content-center align-items-center
+                         bg-danger text-white rounded-3 me-2 me-md-3 flex-shrink-0" 
+                  style="width:30px;height:30px;">
+              <i class="fas fa-map-marker-alt"></i>
+            </span>
+            <a class="fs-5 text-dark text-decoration-none"
+               target="_blank" 
+               rel="noopener"
+               ng-attr-aria-label="Útvonaltervezés: {{lang.address_footer}}"
+               ng-href="https://www.google.com/maps/dir/?api=1&destination={{encodeAddress(lang.address_footer)}}">
+              {{lang.address_footer}}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Nyitvatartás -->
+      <div class="col-12 col-sm-6 col-lg-3 mb-4 mt-5">
+        <h5 class="fw-bold mb-3 text-center text-md-start" 
+            style="color:#205d98">
+            {{lang.opening_hours}}
+          </h5>
+        <ul class="list-unstyled mb-0 text-center text-md-start">
+          <li class="d-flex align-items-start justify-content-center 
+                     justify-content-md-start mb-2">
+            <span class="d-inline-flex justify-content-center 
+                         align-items-center me-2 me-md-3 flex-shrink-0" 
+                  style="width:30px;height:30px;">
+              <i class="fa-solid fa-clock text-warning fs-3"></i>
+            </span>
+            <span>
+              {{lang.monday_to_friday}} 07:00 – 15:30
+            </span>
+          </li>
+          <li class="d-flex align-items-start justify-content-center 
+                     justify-content-md-start">
+            <span class="d-inline-flex justify-content-center align-items-center
+                        me-2 me-md-3 flex-shrink-0" 
+                  style="width:30px;height:30px;">
+              <i class="fa-solid fa-clock text-primary fs-3"></i>
+            </span>
+            <span>
+              {{lang.saturday_label}}: {{lang.close}}
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Megközelítés -->
+      <div class="col-12 col-sm-6 col-lg-3 mb-4 mt-5">
+        <h5 class="fw-bold mb-3" 
+            style="color:#205d98">
+            {{lang.map}}
+          </h5>
+       <iframe
+          ng-src="{{ mapSrc }}"
+          width="100%"
+          height="150"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </footer>
+</div>

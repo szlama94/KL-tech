@@ -1,0 +1,181 @@
+<div class="container">
+  <!-- Hero szekció -->
+  <div class="rounded-5 bg-primary text-white 
+              py-3 mt-3 mb-2 hero-card position-relative overflow-hidden">
+    <!-- A TARTALOM FELSŐ RÉTEGEN -->
+    <div class="hero-content position-relative">
+      <div class="row g-0 align-items-center">
+        <!-- BAL: carousel -->
+        <div class="col-12 col-lg-6 p-3 p-lg-4 hero-left">
+               <!-- Lottie háttér CSAK a bal oszlopban -->
+              <dotlottie-wc
+                src="https://lottie.host/776e1cdf-1cbc-4556-9239-e21cffb78873/JwQM818S4u.lottie"
+                autoplay
+                loop
+                class="hero-lottie-left">
+              </dotlottie-wc>
+          <!-- A carousel tartalma külön rétegen -->
+          <div class="left-content">
+            <div class="ratio ratio-16x9 rounded-4 overflow-hidden" 
+                ng-if="heroImages.length">
+              <div id="heroCarousel" 
+                  class="carousel slide carousel-fade h-100">
+                <div class="carousel-indicators" 
+                    ng-if="heroImages.length > 1">
+                  <button type="button"
+                          data-bs-target="#heroCarousel"
+                          data-bs-slide-to="{{$index}}"
+                          ng-class="{'active': $index === heroStart}"
+                          ng-attr-aria-current="{{$index === heroStart ? 'true' : undefined}}"
+                          aria-label="Slide {{$index+1}}"
+                          ng-repeat="img in heroImages track by $index">
+                  </button>
+                </div>
+
+                <div class="carousel-inner h-100">
+                  <div class="carousel-item h-100"
+                      ng-class="{'active': $index === heroStart}"
+                      ng-repeat="img in heroImages track by $index">
+                    <img ng-src="{{img.src}}" 
+                        alt="{{img.alt}}" 
+                        class="d-block w-100 h-100 object-fit-cover">
+                  </div>
+                </div>
+
+                <button class="carousel-control-prev" 
+                        type="button" 
+                        data-bs-target="#heroCarousel" 
+                        data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">{{ lang.data.previous }}</span>
+                </button>
+                <button class="carousel-control-next" 
+                        type="button" 
+                        data-bs-target="#heroCarousel" 
+                        data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">{{ lang.data.next }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOBB: szöveg + checklist + CTA -->
+        <div class="col-12 col-lg-6 text-center text-lg-start p-4 p-lg-5">
+          <h1 class="fw-bold text-warning mb-3">
+            {{ lang.data.professional_welding_and_metalwork }}
+          </h1>
+          <p class="lead mb-3">
+            {{ lang.data.custom_and_mass_produced_structures }}
+          </p>
+
+          <ul class="list-unstyled mb-4">
+            <li class="d-flex align-items-start mb-2">
+              <i class="fa-solid fa-circle-check text-warning me-2 mt-1"></i>
+              <span>
+                {{ lang.data.steel_stainless_aluminium_welding }}
+              </span>
+            </li>
+            <li class="d-flex align-items-start">
+              <i class="fa-solid fa-circle-check text-warning me-2 mt-2 mb-2"></i>
+              <span>
+                {{ lang.data.pipe_and_edge_bending }}
+              </span>
+            </li>
+            <li class="d-flex align-items-start mb-2">
+              <i class="fa-solid fa-circle-check text-warning me-2 mt-1"></i>
+              <span>
+                {{ lang.data.on_site_installation_and_survey }}
+              </span>
+            </li>
+            <li class="d-flex align-items-start mb-2">
+              <i class="fa-solid fa-circle-check text-warning me-2 mt-1"></i>
+              <span>
+                {{ lang.data.custom_design_prototype_and_small_series }}
+              </span>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap gap-3 
+                      justify-content-center 
+                      justify-content-lg-start mb-3">
+            <div class="d-flex flex-wrap gap-2 justify-content-center 
+                        justify-content-lg-start">
+              <span class="badge bg-light text-dark">
+                <i class="fa-solid fa-shield-halved text-warning me-1 fa-3x"></i> 
+                {{ lang.data.warranty }}
+              </span>
+              <span class="badge bg-light text-dark">
+                <i class="fa-solid fa-user-check text-warning me-1 fa-3x"></i> 
+                {{ lang.data.customer_focus }}
+              </span>
+              <span class="badge bg-light text-dark">
+                <i class="fa-solid fa-screwdriver-wrench text-warning me-1 fa-3x"></i> 
+                {{ lang.data.precision }}
+              </span>
+            </div>
+
+            <a href="mailto:kltechnik99@gmail.com?subject=Aj%C3%A1nlatk%C3%A9r%C3%A9s%20-%20KL%20Technik"
+               class="btn btn-warning fw-bold px-4 py-2 shadow btn-cta"
+               aria-label="Ajánlatkérés e-mailben">
+              {{ lang.data.request_quote }}
+            </a>
+            <a href="tel:+36308113733"
+               class="btn btn-success fw-bold px-4 py-2 
+                      shadow btn-cta btn-cta-success"
+               aria-label="Hívás: +36 30 811 3733">
+              <i class="fa-solid fa-phone me-2"></i> 
+              {{ lang.data.call_now }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Szolgáltatások -->
+  <div class="container pt-2 pb-4">
+    <h2 class="section-title text-center">
+      {{ lang.data.our_services }}
+    </h2>
+    <div class="row g-4 justify-content-center">
+      
+      <div class="col-12 col-md-4 d-flex">
+        <div class="card p-4 text-center flex-fill">
+          <div class="service-icon mb-3">
+            <i class="fas fa-bolt fa-2x text-warning"></i>
+          </div>
+          <h5 class="fw-bold mb-2">
+            {{ lang.data.welding }}
+          </h5>
+          <p>{{ lang.data.welding_description }}</p>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 d-flex">
+        <div class="card p-4 text-center flex-fill">
+          <div class="service-icon mb-3">
+            <i class="fas fa-gears fa-2x text-warning"></i>
+          </div>
+          <h5 class="fw-bold mb-2">
+            {{ lang.data.metal_working }}
+          </h5>
+          <p>{{ lang.data.locksmith_sheetmetal_structures }}</p>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 d-flex">
+        <div class="card p-4 text-center flex-fill">
+          <div class="service-icon mb-3">
+            <i class="fas fa-truck fa-2x text-warning"></i>
+          </div>
+          <h5 class="fw-bold mb-2">
+            {{ lang.data.on_site_installation }}
+          </h5>
+          <p>{{ lang.data.mobile_team }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

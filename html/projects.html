@@ -1,0 +1,139 @@
+<div class="container mt-2 mb-2">
+  <!-- Sárga teaser kártya (ugyanolyan szélesség, mint a kék) -->
+  <div class="container py-2">
+    <div class="bg-warning text-primary rounded-5 
+                p-4 p-lg-5 shadow-sm mb-4">
+      <div class="row g-4 align-items-center">
+        <!-- Szöveg (bal) -->
+        <div class="col-12 col-lg-6 order-2 order-lg-1">
+          <h2 class="fw-bold mb-2">
+            {{lang.data.our_previous_jobs}}
+          </h2>
+          <p class="fw-semibold text-white text-justify mb-3">
+            {{ lang.data.every_project_story }} 
+          </p>
+            <p class="fw-semibold text-white text-justify mb-3">
+           {{ lang.data.every_project_challenge }}
+          </p>
+        </div>
+
+        <!-- Kép (jobb) -->
+        <div class="col-12 col-lg-6 order-1 order-lg-2">
+          <div class="ratio ratio-16x9 rounded-4 overflow-hidden">
+            <img
+              ng-src="{{ worker_pic }}"
+              alt="Válogatás elkészült munkáinkból"
+              class="w-100 h-100 object-fit-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Kategória pill-ek -->
+    <!-- KÉK CARD -->
+    <div class="bg-primary text-white rounded-5 p-4 
+                p-lg-5 shadow-sm">
+      <h2 class="h2 fw-bold text-warning text-center mb-4">
+        {{ lang.data.our_jobs }}
+      </h2>
+      <!-- Kategória pill-ek -->
+      <div class="d-flex flex-wrap gap-2 
+                  justify-content-center mb-4">
+        <button
+          type="button"
+          class="btn btn-lg rounded-pill custom-hover"
+          ng-class="{
+            'btn-warning text-dark fw-semibold active': activeCat==='all',
+            'btn-outline-light text-white': activeCat!=='all'}"
+          ng-click="setCategory('all')">
+          {{ lang.data.all }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-lg rounded-pill custom-hover"
+          ng-repeat="c in categories track by c.id"
+          ng-class="{
+            'btn-warning text-dark fw-semibold shadow-sm active': activeCat===c.id,
+            'btn-outline-light text-white border-1': activeCat!==c.id}"
+          ng-click="setCategory(c.id)">
+          {{c.name}}
+        </button>
+
+      </div>
+
+      <!-- Rács -->
+      <div class="row g-3">
+        <div
+          class="col-6 col-md-4 col-lg-3"
+          ng-repeat="img in filtered = (images | filter:byCategory) track by $index">
+          <a href=""
+             class="text-decoration-none"
+             ng-click="openModal($index, filtered); $event.preventDefault()">
+            <div class="bg-white rounded-4 shadow-sm p-1">
+              <div class="ratio ratio-16x9 rounded-3 overflow-hidden">
+                <img
+                  ng-src="{{img.src}}"
+                  alt="{{img.title}}"
+                  class="w-100 h-100 object-fit-cover"
+                  loading="lazy">
+              </div>
+              <div class="small text-muted mt-2 px-2">
+                {{img.title}}
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Galéria modál (változatlanul maradhat) -->
+    <div class="modal fade" 
+         id="galleryModal" 
+         tabindex="-1" 
+         aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-black text-white border-0">
+          <div class="modal-body p-0 position-relative">
+            <button type="button" 
+                    class="btn-close btn-close-white 
+                           position-absolute end-0 m-3"
+                    data-bs-dismiss="modal" 
+                    aria-label="Bezárás">
+              </button>
+
+            <!-- FIX MÉRETŰ SZÍNPAD -->
+            <div class="gallery-stage">
+              <img ng-src="{{current.src}}" 
+                   alt="{{current.title}}" 
+                   class="gallery-img">
+            </div>
+
+            <div class="p-3 d-flex justify-content-between 
+                        align-items-center">
+              <div class="fw-semibold">
+                {{current.title}}
+              </div>
+              <div class="text-white-50">
+                {{currentIndex+1}} / {{currentTotal}}
+              </div>
+            </div>
+
+            <!-- Prev / Next -->
+            <button type="button" 
+                    class="gallery-nav gallery-prev" 
+                    ng-click="prev()" 
+                    aria-label="Előző">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button type="button" 
+                    class="gallery-nav gallery-next" 
+                    ng-click="next()" 
+                    aria-label="Következő">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
