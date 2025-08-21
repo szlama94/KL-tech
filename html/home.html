@@ -97,37 +97,38 @@
             </li>
           </ul>
 
-          <div class="d-flex flex-wrap gap-3 
-                      justify-content-center 
-                      justify-content-lg-start mb-3">
-            <div class="d-flex flex-wrap gap-2 justify-content-center 
-                        justify-content-lg-start">
-              <span class="badge bg-light text-dark">
-                <i class="fa-solid fa-shield-halved text-warning me-1 fa-3x"></i> 
+          <!-- CTA BLOKK (BADGE-EK + GOMBOK) -->
+          <div class="cta-wrap">
+            <!-- BADGE-EK -->
+            <div class="d-flex flex-wrap gap-3 align-items-center
+                        justify-content-center justify-content-lg-start mb-3">
+              <span class="badge bg-light text-dark d-inline-flex align-items-center px-3 py-2">
+                <i class="fa-solid fa-shield-halved text-warning me-2 fa-2x"></i>
                 {{ lang.data.warranty }}
               </span>
-              <span class="badge bg-light text-dark">
-                <i class="fa-solid fa-user-check text-warning me-1 fa-3x"></i> 
+              <span class="badge bg-light text-dark d-inline-flex align-items-center px-3 py-2">
+                <i class="fa-solid fa-user-check text-warning me-2 fa-2x"></i>
                 {{ lang.data.customer_focus }}
               </span>
-              <span class="badge bg-light text-dark">
-                <i class="fa-solid fa-screwdriver-wrench text-warning me-1 fa-3x"></i> 
+              <span class="badge bg-light text-dark d-inline-flex align-items-center px-3 py-2">
+                <i class="fa-solid fa-screwdriver-wrench text-warning me-2 fa-2x"></i>
                 {{ lang.data.precision }}
               </span>
             </div>
 
-            <a href="mailto:kltechnik99@gmail.com?subject=Aj%C3%A1nlatk%C3%A9r%C3%A9s%20-%20KL%20Technik"
-               class="btn btn-warning fw-bold px-4 py-2 shadow btn-cta"
-               aria-label="Ajánlatkérés e-mailben">
-              {{ lang.data.request_quote }}
-            </a>
-            <a href="tel:+36308113733"
-               class="btn btn-success fw-bold px-4 py-2 
-                      shadow btn-cta btn-cta-success"
-               aria-label="Hívás: +36 30 811 3733">
-              <i class="fa-solid fa-phone me-2"></i> 
-              {{ lang.data.call_now }}
-            </a>
+            <!-- GOMBOK KÜLÖN SORBAN, KÖZÉPRE XS–MD, BALRA LG+ -->
+            <div class="d-flex flex-column flex-sm-row gap-3
+                        justify-content-center justify-content-lg-start">
+              <a href="mailto:kltechnik99@gmail.com?subject=Aj%C3%A1nlatk%C3%A9r%C3%A9s%20-%20KL%20Technik"
+                class="btn btn-warning fw-bold px-4 py-2 shadow btn-cta">
+                {{ lang.data.request_quote }}
+              </a>
+              <a href="tel:+36308113733"
+                class="btn btn-success fw-bold px-4 py-2 shadow btn-cta btn-cta-success">
+                <i class="fa-solid fa-phone me-2"></i>
+                {{ lang.data.call_now }}
+              </a>
+            </div>
           </div>
         </div>
       </div>
