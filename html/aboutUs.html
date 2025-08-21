@@ -1,29 +1,27 @@
 <div class="container mt-3 mb-4" 
      ng-controller="aboutUs_Controller">
+
   <!-- Bevezető / sztori -->
-  <div class="bg-primary text-white rounded-5 
-              p-4 p-lg-5 shadow-sm mb-4">
+  <div class="bg-primary text-white rounded-5 p-4 p-lg-5 shadow-sm mb-4">
     <div class="row g-4 align-items-center">
       
-      <!-- Szöveg (bal) -->
-      <div class="col-12 col-lg-5">
+      <!-- Szöveg (felül xs–lg, bal hasáb XL-től) -->
+      <div class="col-12 col-xl-6 text-center text-xl-start">
         <h2 class="fw-bold text-warning mb-3">
           {{ lang.data.welcome_kltechnik }}
         </h2>
-        <div class="pe-lg-3" style="max-width: 480px;">
+        <div class="px-2 px-sm-3 px-lg-4 pe-xl-3 mx-auto mx-xl-0">
           <p class="mb-3 text-justify">{{ lang.data.about_us_intro }}</p>
           <p class="mb-3 text-justify">{{ lang.data.about_us_cooperation }}</p>
-          <p class="mb-0">{{ lang.data.about_us_proud_goal }}</p>
+          <p class="mb-0 text-justify">{{ lang.data.about_us_proud_goal }}</p>
         </div>
       </div>
 
-      <!-- Carousel (jobb) -->
-      <div class="col-12 col-lg-7">
-        <div class="ratio ratio-16x9 rounded-4 
-                    overflow-hidden" 
+      <!-- Carousel (alul xs–lg, jobb hasáb XL-től) -->
+      <div class="col-12 col-xl-6">
+        <div class="ratio ratio-16x9 rounded-4 overflow-hidden" 
              ng-if="workshopImages.length">
-          <div id="aboutWorkshop" 
-               class="carousel slide carousel-fade h-100">
+          <div id="aboutWorkshop" class="carousel slide carousel-fade h-100">
             <div class="carousel-inner h-100">
               <div class="carousel-item h-100"
                    ng-repeat="img in workshopImages track by $index"
@@ -32,23 +30,15 @@
                      class="d-block w-100 h-100 object-fit-cover">
               </div>
             </div>
-            <button class="carousel-control-prev" 
-                    type="button" 
-                    data-bs-target="#aboutWorkshop" 
-                    data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" 
+                    data-bs-target="#aboutWorkshop" data-bs-slide="prev">
               <span class="carousel-control-prev-icon"></span>
-              <span class="visually-hidden">
-                {{ lang.data.previous }}
-              </span>
+              <span class="visually-hidden">{{ lang.data.previous }}</span>
             </button>
-            <button class="carousel-control-next" 
-                    type="button" 
-                    data-bs-target="#aboutWorkshop" 
-                    data-bs-slide="next">
+            <button class="carousel-control-next" type="button" 
+                    data-bs-target="#aboutWorkshop" data-bs-slide="next">
               <span class="carousel-control-next-icon"></span>
-              <span class="visually-hidden">
-                {{ lang.data.next }}
-              </span>
+              <span class="visually-hidden">{{ lang.data.next }}</span>
             </button>
           </div>
         </div>
@@ -58,8 +48,7 @@
 
   <!-- Fő erősségek / szolgáltatások -->
   <div class="bg-light rounded-5 p-4 p-lg-5 shadow-sm mb-4">
-    <h3 class="fw-bold mb-4" 
-        style="color: #205d98">
+    <h3 class="fw-bold mb-4" style="color: #205d98">
       {{ lang.data.wide_range_solutions }}
     </h3>
 
@@ -69,42 +58,28 @@
           <div class="mb-3">
             <i class="fa-solid fa-industry fa-5x text-warning"></i>
           </div>
-          <h5 class="fw-bold mb-2">
-           {{ lang.data.steel_structures }}
-          </h5>
-          <p class="mb-0">
-            {{ lang.data.hall_frames_fences }}
-          </p>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="card border-0 shadow-sm h-100 
-                    text-center py-4">
-          <div class="mb-3">
-            <i class="fa-solid fa-bicycle fa-5x text-warning"></i>
-          </div>
-          <h5 class="fw-bold mb-2">
-            {{ lang.data.bike_stands }}
-          </h5>
-          <p class="mb-0">
-            {{ lang.data.austria_germany_projects }}
-          </p>
+          <h5 class="fw-bold mb-2">{{ lang.data.steel_structures }}</h5>
+          <p class="mb-0">{{ lang.data.hall_frames_fences }}</p>
         </div>
       </div>
 
       <div class="col-12 col-md-6 col-lg-3">
         <div class="card border-0 shadow-sm h-100 text-center py-4">
           <div class="mb-3">
-            <i class="fa-solid fa-wand-magic-sparkles 
-                      fa-5x text-warning"></i>
+            <i class="fa-solid fa-bicycle fa-5x text-warning"></i>
           </div>
-          <h5 class="fw-bold mb-2">
-            {{ lang.data.custom_orders }}
-          </h5>
-          <p class="mb-0">
-            {{ lang.data.gates_railings_accessories }}
-          </p>
+          <h5 class="fw-bold mb-2">{{ lang.data.bike_stands }}</h5>
+          <p class="mb-0">{{ lang.data.austria_germany_projects }}</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100 text-center py-4">
+          <div class="mb-3">
+            <i class="fa-solid fa-wand-magic-sparkles fa-5x text-warning"></i>
+          </div>
+          <h5 class="fw-bold mb-2">{{ lang.data.custom_orders }}</h5>
+          <p class="mb-0">{{ lang.data.gates_railings_accessories }}</p>
         </div>
       </div>
 
@@ -113,46 +88,41 @@
           <div class="mb-3">
             <i class="fa-solid fa-gears fa-5x text-warning"></i>
           </div>
-          <h5 class="fw-bold mb-2">
-            {{ lang.data.pipe_bending_welding }}
-          </h5>
-          <p class="mb-0">
-            {{ lang.data.spike_tube_bending_welding }}
-          </p>
+          <h5 class="fw-bold mb-2">{{ lang.data.pipe_bending_welding }}</h5>
+          <p class="mb-0">{{ lang.data.spike_tube_bending_welding }}</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Műhely & géppark + mini galéria -->
-  <div class="bg-primary text-white rounded-5 p-4 
-              p-lg-5 shadow-sm mb-4">
+  <div class="bg-primary text-white rounded-5 p-4 p-lg-5 shadow-sm mb-4">
     <div class="row g-4 align-items-center">
-      <div class="col-12 col-lg-6">
+      
+      <!-- Szöveg (felül xs–lg, bal hasáb XL-től) -->
+      <div class="col-12 col-xl-6 text-center text-xl-start">
         <h3 class="fw-bold text-warning mb-3">
           {{ lang.data.our_500sqm_workshop }}
         </h3>
-        <p class="mb-3">
+        <p class="mb-3 text-justify">
           {{ lang.data.industrial_welding_machines }}
         </p>
-        <ul class="mb-4">
-          <li>{{ lang.data.welding_technologies }}</li>
-          <li>{{ lang.data.materials }}</li>
-          <li>{{ lang.data.on_site_installation2 }}</li>
+        <ul class="mb-4 text-start">
+          <li class="text-justify">{{ lang.data.welding_technologies }}</li>
+          <li class="text-justify">{{ lang.data.materials }}</li>
+          <li class="text-justify">{{ lang.data.on_site_installation2 }}</li>
         </ul>
       </div>
 
-      <!-- GÉPEK CAROUSEL BLOKK -->
-      <div class="col-12 col-lg-6" 
-           ng-controller="aboutUs_Controller">
+      <!-- GÉPEK CAROUSEL (alul xs–lg, jobb hasáb XL-től) -->
+      <div class="col-12 col-xl-6" ng-controller="aboutUs_Controller">
         <div id="machinesCarousel" 
-             class="carousel slide carousel-fade 
-                    rounded-4 overflow-hidden" 
-            ng-if="machineImages.length">
+             class="carousel slide carousel-fade rounded-4 overflow-hidden" 
+             ng-if="machineImages.length">
           <div class="carousel-inner">
             <div class="carousel-item" 
-                ng-repeat="img in machineImages track by $index"
-                ng-class="{'active': $index === machinesStart}">
+                 ng-repeat="img in machineImages track by $index"
+                 ng-class="{'active': $index === machinesStart}">
               <div class="ratio ratio-16x9">
                 <img ng-src="{{img.src}}" 
                      class="w-100 h-100 object-fit-cover" 
@@ -161,27 +131,15 @@
             </div>
           </div>
 
-          <button class="carousel-control-prev" 
-                  type="button" 
-                  data-bs-target="#machinesCarousel" 
-                  data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" 
-                  aria-hidden="true">
-              </span>
-            <span class="visually-hidden">
-              {{ lang.data.previous }}
-            </span>
+          <button class="carousel-control-prev" type="button" 
+                  data-bs-target="#machinesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{{ lang.data.previous }}</span>
           </button>
-          <button class="carousel-control-next" 
-                  type="button" 
-                  data-bs-target="#machinesCarousel" 
-                  data-bs-slide="next">
-            <span class="carousel-control-next-icon" 
-                  aria-hidden="true">
-              </span>
-            <span class="visually-hidden">
-              {{ lang.data.next }}
-            </span>
+          <button class="carousel-control-next" type="button" 
+                  data-bs-target="#machinesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{{ lang.data.next }}</span>
           </button>
         </div>
       </div>
