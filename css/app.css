@@ -497,3 +497,9 @@ body{ background:#f4f8fc; }
     --bs-aspect-ratio: 66% !important; /* kicsit magasabb mobilon */
   }
 }
+
+@media (max-width: 576px) {
+  #heroCarousel {
+    min-height: 240px; /* vagy amekkora jól néz ki */
+  }
+}
