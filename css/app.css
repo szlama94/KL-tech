@@ -491,3 +491,9 @@ body{ background:#f4f8fc; }
   z-index:0;
 }
 .hero-left .left-content{ position:relative; z-index:1; }
+
+@media (max-width: 576px) {
+  .ratio.ratio-16x9 {
+    --bs-aspect-ratio: 66% !important; /* kicsit magasabb mobilon */
+  }
+}
