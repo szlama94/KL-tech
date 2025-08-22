@@ -12,8 +12,9 @@
   /* Application config */
   .config([
     '$stateProvider', 
-    '$urlRouterProvider', 
-    function($stateProvider, $urlRouterProvider) {
+    '$urlRouterProvider',
+    '$locationProvider',
+    function($stateProvider, $urlRouterProvider,$locationProvider) {
 
       $stateProvider
       .state('root', {
@@ -60,6 +61,9 @@
 				templateUrl: './html/contact.html'
 			});
       $urlRouterProvider.otherwise('/');
+
+      $locationProvider.html5Mode(false);
+      $locationProvider.hashPrefix('!');
     }
   ])
 
@@ -629,7 +633,9 @@
 
   //------------Home_controller--------------->
   .controller('homeController', [
-  '$scope', '$timeout', 'http',
+  '$scope', 
+  '$timeout', 
+  'http',
   function ($scope, $timeout, http) {
 
 
