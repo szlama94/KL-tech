@@ -686,6 +686,24 @@
         .catch(function (e) {
           console.error(e);
         });
+
+
+        window.addEventListener("resize", () => {
+          document.querySelectorAll("dotlottie-wc").forEach(el => {
+            // trükk: újra beállítjuk a src-t, így rendereli magát
+            const src = el.getAttribute("src");
+            el.setAttribute("src", src);
+          });
+        });
+
+        $scope.$on('$routeChangeSuccess', () => {
+          document.querySelectorAll("dotlottie-wc").forEach(el => {
+            const src = el.getAttribute("src");
+            el.setAttribute("src", src);
+          });
+        });
+
+
     }
   ]);
 })(window, angular);

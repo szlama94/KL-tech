@@ -217,27 +217,27 @@ body{ background:#f4f8fc; }
   box-shadow: 0 0.3rem 0.6rem rgba(25, 135, 84, 0.5);
 }
 
-.custom-hover:hover {
-  background-color: transparent !important; /* ne legyen kitöltve */
-  color: var(--bs-warning) !important;      /* szöveg warning */
-  border-color: var(--bs-warning) !important; /* keret warning */
-}
-
-/* Normál hover – csak ha nem aktív */
+/* Hover – ha nem aktív */
 .custom-hover:hover:not(.active) {
   background-color: var(--bs-warning) !important;
   color: #000 !important;
   border-color: var(--bs-warning) !important;
-  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2); /* kis árnyék hoverkor */
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
 }
 
-/* Aktív gomb stílusa */
+/* Aktív gomb (mindig maradjon árnyék) */
 .custom-hover.active {
   background-color: var(--bs-warning) !important;
   color: #fff !important;
   border-color: var(--bs-warning) !important;
-  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.25); /* árnyék aktív állapotban is */
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.25) !important;
 }
+
+/* Ha épp kattintva van (egér lenyomás közben is maradjon) */
+.custom-hover:active {
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.25) !important;
+}
+
 
 /* A modál max szélessége (asztali) */
 #galleryModal .modal-dialog {
@@ -292,63 +292,171 @@ body{ background:#f4f8fc; }
 }
 
 
-
-
-.hero-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-lottie {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none; /* kattintható maradjon a tartalom */
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
+/*Nyelvválaszto pointer*/
+.dropdown-item {
+  cursor: pointer;
 }
 
 
-/* Bal oszlop keret, hogy legyen pozicionálási referenciánk */
+/* Alap: legyen picit lejjebb és áttetsző */
+.navbar .dropdown-menu {
+  display: block;                 /* hogy animálható legyen */
+  opacity: 0;
+  visibility: hidden;
+  margin-top: 8px;                /* innen fog „felcsúszni” */
+  transition: opacity .25s ease, margin-top .25s ease, visibility 0s linear .25s;
+}
+
+/* Nyitott állapot: teljesen látszik, feljebb csúszva */
+.navbar .dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  margin-top: 0;
+  transition: opacity .25s ease, margin-top .25s ease, visibility 0s;
+}
+
+.navbar .dropdown-menu { transition-delay: .1s, .1s, 0s; }
+
+
+/* XL alatt: carousel legyen hangsúlyosabb felül */
+@media (max-width: 1199.98px) {
+  .hero-card .hero-left .ratio {
+    /* magasabb képarány (alap 56.25% helyett) */
+    --bs-aspect-ratio: 42%;
+  }
+  .hero-card .left-content {
+    max-width: 100%;
+  }
+  .hero-card .btn-cta {         /* gombok kényelmesebbek mobilon */
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+/* A bal hasáb legyen rétegezéshez relatív */
 .hero-left {
   position: relative;
 }
 
-/* A Lottie csak a bal oszlop terében mozogjon, és kicsit lógjon ki,
-   hogy „alábújjon” a carousel alá/fölé. */
-.hero-lottie-left {
+/* Lottie mint HÁTTÉR: nagy, levágható, nem kattintható */
+.hero-left .lottie-bg {
   position: absolute;
-  /* A fogaskerekek középre a bal oszlopban, és kicsit kilógatva */
-  top: -75%;
-  left: -25%;
-
-  /* Méretezés: nagyobb, mint a doboz, hogy kilógjon – reszponzív */
-  width: 155%;
-  height: auto;
-  aspect-ratio: 1/1;
-
+  inset: -30% -5% auto -30%;   /* top,right,bottom,left – kicsit „kilóg” */
+  width: 160%;
+  height: 160%;
   z-index: 0;
-  pointer-events: none; /* ne blokkolja a kattintást a carouselre */
-  /* Ha mégis halványítanád:
-     opacity: .22; 
-  */
+  pointer-events: none;         /* ne takarja a carousel gombokat */            /* finom háttér */       /* minimális lágyítás (opcionális) */
+  overflow: hidden;
 }
 
-/* A carousel tartalma a Lottie fölé kerüljön */
+.hero-left .lottie-bg dotlottie-wc {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: scale(1.1);        /* picit nagyobbra, hogy nyugodtan vágódjon */
+  will-change: transform;
+}
+
+/* A carousel réteg legyen felül */
 .hero-left .left-content {
   position: relative;
   z-index: 1;
 }
 
-/* Mobilon túl zsúfolt lehet – ilyenkor rejtsük el vagy kicsinyítsük */
+/* Kis képernyőn finomítsuk / halványítsuk vagy rejtsük el */
 @media (max-width: 991.98px) {
-  .hero-lottie-left {
-    display: none;   /* vagy pl.: width: 120%; left: -10%; top: -8%; */
+  .hero-left .lottie-bg {
+    opacity: .18;
+    inset: -6% -4% auto -10%;
+    width: 130%;
+    height: 130%;
+  }
+}
+
+/* Akinek csökkentett animáció van beállítva, kapcsoljuk le a mozgást */
+@media (prefers-reduced-motion: reduce) {
+  .hero-left .lottie-bg dotlottie-wc {
+    animation: none !important;
+  }
+}
+
+
+
+
+
+/* Rétegezés */
+.hero-left { position: relative; }
+
+/* Lottie háttér helyzete */
+.hero-left .lottie-bg {
+  position: absolute;
+  inset: -30% -5% auto -30%;  /* nagyobb, nyugodtan lóghat ki */
+  width: 160%;
+  height: 160%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hero-left .lottie-bg dotlottie-wc {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.2);
+}
+
+/* Előtér: a carousel mindig felül */
+.hero-left .left-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== TÖRÉSPONTOK ===== */
+
+/* XS–LG: alul legyen finom vágás, hogy ne érjen rá a szövegblokkra */
+@media (max-width: 1199.98px) {
+  .hero-left { overflow: hidden; } /* itt jó, ha mindent a hasáb vág */
+  .hero-left .lottie-bg {
+    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+  }
+}
+
+/* XL+: NE vágjuk felül-alul, csak a jobb szélhez tegyünk minimális „védő” vágást */
+@media (min-width: 1200px) {
+  .hero-left { overflow: visible; } /* ne vágjuk le felül/alul */
+  .hero-left .lottie-bg {
+    /* jobb szél felé halványodik, hogy ne folyjon át a szöveg oszlopába */
+    -webkit-mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+  }
+}
+
+
+/* XS–LG: alul vágás, de színesség marad */
+@media (max-width: 1199.98px) {
+  .hero-left {
+    overflow: hidden; /* levágja, ami túl lóg alul és jobbra */
+  }
+  .hero-left .lottie-bg {
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+    opacity: 1; /* teljes szín */
+  }
+}
+
+/* XL+: semmi vágás, teljes szín */
+@media (min-width: 1200px) {
+  .hero-left {
+    overflow: visible;
+  }
+  .hero-left .lottie-bg {
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+    opacity: 1;
   }
 }
