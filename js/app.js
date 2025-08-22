@@ -12,9 +12,8 @@
   /* Application config */
   .config([
     '$stateProvider', 
-    '$urlRouterProvider',
-    '$locationProvider',   
-    function($stateProvider, $urlRouterProvider,$locationProvider) {
+    '$urlRouterProvider', 
+    function($stateProvider, $urlRouterProvider) {
 
       $stateProvider
       .state('root', {
@@ -61,13 +60,6 @@
 				templateUrl: './html/contact.html'
 			});
       $urlRouterProvider.otherwise('/');
-
-      // Hashtag nélküli URL
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: true,
-        rewriteLinks: true
-      });
     }
   ])
 
