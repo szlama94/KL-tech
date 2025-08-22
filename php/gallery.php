@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // ugyanaz a környezet, mint a példádban
-require_once('../../common/php/environment.php');
+require_once('../common/php/environment.php');
 
 // engedélyezett mappák: media/image/projects/<DIR>
 $allowed = [

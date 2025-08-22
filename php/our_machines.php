@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // Set environment
-require_once('../../common/php/environment.php');
+require_once('../common/php/environment.php');
 
 // Mappa a képekhez
 $dir = './media/image/our_machines';

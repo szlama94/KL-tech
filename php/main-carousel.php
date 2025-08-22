@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // Set environment
-require_once('../../common/php/environment.php');
+require_once('../common/php/environment.php');
 
 // Gyűjtés + csak fájlnév (basename), majd keverés
 $files = glob('./media/image/main_carousel/*.{jpg,jpeg,png,gif,webp,avif}', GLOB_BRACE);
