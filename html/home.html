@@ -9,11 +9,9 @@
         <div class="col-12 col-xl-6 p-3 p-xl-4 hero-left">
                <!-- Lottie háttér CSAK a bal oszlopban -->
               <div class="lottie-bg">
-                <dotlottie-wc
-                  src="media/lottie/Settings.lottie"
-                  autoplay
-                  loop
-                  speed="0.2">
+                <dotlottie-wc 
+                  ng-attr-src="media/lottie/Settings.lottie?{{lottieCacheBuster}}" 
+                  autoplay loop speed="0.5">
                 </dotlottie-wc>
               </div>
           <!-- A carousel tartalma külön rétegen -->

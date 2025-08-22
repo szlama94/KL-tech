@@ -460,3 +460,17 @@ body{ background:#f4f8fc; }
     opacity: 1;
   }
 }
+
+.hero-left .lottie-bg dotlottie-wc {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+
+.hero-left .lottie-bg dotlottie-wc{
+  transform: scale(1.2) !important;   /* ne tudja lenullázni a noTransform */
+  animation: none;                     /* ne kapjon VÉLETLEN külső CSS animot */
+}

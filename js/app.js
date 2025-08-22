@@ -12,8 +12,9 @@
   /* Application config */
   .config([
     '$stateProvider', 
-    '$urlRouterProvider', 
-    function($stateProvider, $urlRouterProvider) {
+    '$urlRouterProvider',
+    '$locationProvider',   
+    function($stateProvider, $urlRouterProvider,$locationProvider) {
 
       $stateProvider
       .state('root', {
@@ -60,6 +61,13 @@
 				templateUrl: './html/contact.html'
 			});
       $urlRouterProvider.otherwise('/');
+
+      // Hashtag nélküli URL
+      $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: true,
+        rewriteLinks: true
+      });
     }
   ])
 
@@ -629,81 +637,84 @@
 
   //------------Home_controller--------------->
   .controller('homeController', [
-    '$scope', '$timeout', 'http',
-    function ($scope, $timeout, http) {
+  '$scope', '$timeout', 'http',
+  function ($scope, $timeout, http) {
 
-      $scope.heroImages = [];
-      $scope.heroStart  = 0; // indulhat 0-ról, a PHP már keveri a sorrendet
 
-      // --- Bootstrap carousel init, csak ha már van DOM + item ---
-      function initCarousel(retries){
-        $timeout(function(){
-          var el = document.getElementById('heroCarousel');
-          if (!el) {
-            if ((retries||0) > 0) return initCarousel(retries-1);
-            return;
+        // --- itt a legelején takarítunk ---
+      (function cleanupGlobalFlags() {
+        const targets = [document.body, document.documentElement,
+                        document.querySelector('#app'), 
+                        document.querySelector('.page'),
+                        document.querySelector('.hero-left')].filter(Boolean);
+        const bad = ['noTransform','noAnimation','animPaused','noTransition'];
+        targets.forEach(t => bad.forEach(c => t.classList.remove(c)));
+      })();
+
+
+    $scope.heroImages = [];
+    $scope.heroStart  = 0; // indulhat 0-ról, a PHP már keveri a sorrendet
+
+    // --- Bootstrap carousel init, csak ha már van DOM + item ---
+    function initCarousel(retries){
+      $timeout(function(){
+        var el = document.getElementById('heroCarousel');
+        if (!el) {
+          if ((retries||0) > 0) return initCarousel(retries-1);
+          return;
+        }
+        var items = el.querySelectorAll('.carousel-item');
+        if (!items || items.length === 0) {
+          if ((retries||0) > 0) return initCarousel(retries-1);
+          return;
+        }
+
+        if (window.bootstrap && bootstrap.Carousel) {
+          var inst = bootstrap.Carousel.getInstance(el);
+          if (!inst) {
+            inst = new bootstrap.Carousel(el, {
+              interval: 3500,
+              pause: false,
+              wrap: true,
+              touch: true
+            });
           }
-          var items = el.querySelectorAll('.carousel-item');
-          if (!items || items.length === 0) {
-            if ((retries||0) > 0) return initCarousel(retries-1);
-            return;
-          }
-
-          if (window.bootstrap && bootstrap.Carousel) {
-            var inst = bootstrap.Carousel.getInstance(el);
-            if (!inst) {
-              inst = new bootstrap.Carousel(el, {
-                interval: 3500,
-                pause: false,
-                wrap: true,
-                touch: true
-                // NEM kell ride: 'carousel', mert az azonnal elindítaná
-                // még azelőtt, hogy a heroStart-ra ugranánk.
-              });
-            }
-            inst.to($scope.heroStart || 0); // ugorjunk a kezdő diára
-            inst.cycle();                   // és kezdje el pörgetni
-          }
-        }, 0);
-      }
-
-      // --- Képek betöltése a backendre támaszkodva (PHP kever) ---
-      http.request('./php/main-carousel.php')
-        .then(function (response) {
-          var arr = (response && response.gallery) ? response.gallery : [];
-          $scope.heroImages = arr.map(function(name, i){
-            return {
-              src: 'media/image/main_carousel/' + name,
-              alt: 'Hero kép ' + (i+1)
-            };
-          });
-
-          // Várjuk meg, míg az ng-repeat DOM-ot rajzol, aztán indítunk
-          $scope.$evalAsync(function(){
-            initCarousel(10); // max 10 próbálkozás (nagyon gyors gépeken is ok)
-          });
-        })
-        .catch(function (e) {
-          console.error(e);
-        });
-
-
-        window.addEventListener("resize", () => {
-          document.querySelectorAll("dotlottie-wc").forEach(el => {
-            // trükk: újra beállítjuk a src-t, így rendereli magát
-            const src = el.getAttribute("src");
-            el.setAttribute("src", src);
-          });
-        });
-
-        $scope.$on('$routeChangeSuccess', () => {
-          document.querySelectorAll("dotlottie-wc").forEach(el => {
-            const src = el.getAttribute("src");
-            el.setAttribute("src", src);
-          });
-        });
-
-
+          inst.to($scope.heroStart || 0); // ugorjunk a kezdő diára
+          inst.cycle();                   // és kezdje el pörgetni
+        }
+      }, 0);
     }
-  ]);
+
+    // --- Képek betöltése a backendre támaszkodva (PHP kever) ---
+    http.request('./php/main-carousel.php')
+      .then(function (response) {
+        var arr = (response && response.gallery) ? response.gallery : [];
+        $scope.heroImages = arr.map(function(name, i){
+          return {
+            src: 'media/image/main_carousel/' + name,
+            alt: 'Hero kép ' + (i+1)
+          };
+        });
+
+        // Várjuk meg, míg az ng-repeat DOM-ot rajzol, aztán indítunk
+        $scope.$evalAsync(function(){
+          initCarousel(10); // max 10 próbálkozás
+        });
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
+
+
+    // --- ÚJRATÖLTÉS, ha home state-re váltunk ---
+    $scope.$on('$stateChangeSuccess', function(event, toState) {
+      if (toState.name === "home") {
+        setTimeout(function() {
+          window.location.reload();
+        }, 50);
+      }
+    });
+
+  }
+]);
 })(window, angular);
