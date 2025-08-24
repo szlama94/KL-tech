@@ -8,14 +8,17 @@
         <!-- BAL: carousel -->
         <div class="col-12 col-xl-6 p-3 p-xl-4 hero-left">
                <!-- Lottie háttér CSAK a bal oszlopban -->
-              <div class="lottie-bg">
-                <dotlottie-wc 
-                  src="media/lottie/Settings.lottie" 
-                  autoplay 
-                  loop 
-                  speed="0.5">
+              <div class="lottie-bg" 
+                   ng-if="lottieReady">
+                <dotlottie-wc
+                  src="media/lottie/Settings.lottie"
+                  autoplay
+                  loop
+                  speed="0.5"
+                  style="display:block;width:100%;height:100%;">
                 </dotlottie-wc>
               </div>
+
           <!-- A carousel tartalma külön rétegen -->
           <div class="left-content">
             <div class="ratio ratio-16x9 rounded-4 overflow-hidden" 

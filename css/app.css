@@ -337,104 +337,9 @@ body{ background:#f4f8fc; }
 
 
 
-/* A bal hasáb legyen rétegezéshez relatív */
-.hero-left {
-  position: relative;
-}
-
-/* Lottie mint HÁTTÉR: nagy, levágható, nem kattintható */
-.hero-left .lottie-bg {
-  position: absolute;
-  inset: -30% -5% auto -30%;   /* top,right,bottom,left – kicsit „kilóg” */
-  width: 160%;
-  height: 160%;
-  z-index: 0;
-  pointer-events: none;         /* ne takarja a carousel gombokat */            /* finom háttér */       /* minimális lágyítás (opcionális) */
-  overflow: hidden;
-}
-
-.hero-left .lottie-bg dotlottie-wc {
-  width: 100%;
-  height: 100%;
-  display: block;
-  transform: scale(1.1);        /* picit nagyobbra, hogy nyugodtan vágódjon */
-  will-change: transform;
-}
-
-/* A carousel réteg legyen felül */
-.hero-left .left-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* Kis képernyőn finomítsuk / halványítsuk vagy rejtsük el */
-@media (max-width: 991.98px) {
-  .hero-left .lottie-bg {
-    opacity: .18;
-    inset: -6% -4% auto -10%;
-    width: 130%;
-    height: 130%;
-  }
-}
-
-/* Akinek csökkentett animáció van beállítva, kapcsoljuk le a mozgást */
-@media (prefers-reduced-motion: reduce) {
-  .hero-left .lottie-bg dotlottie-wc {
-    animation: none !important;
-  }
-}
 
 
 
-
-
-/* Rétegezés */
-.hero-left { position: relative; }
-
-/* Lottie háttér helyzete */
-.hero-left .lottie-bg {
-  position: absolute;
-  inset: -30% -5% auto -30%;  /* nagyobb, nyugodtan lóghat ki */
-  width: 160%;
-  height: 160%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.hero-left .lottie-bg dotlottie-wc {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: scale(1.2);
-}
-
-/* Előtér: a carousel mindig felül */
-.hero-left .left-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* ===== TÖRÉSPONTOK ===== */
-
-/* XS–LG: alul legyen finom vágás, hogy ne érjen rá a szövegblokkra */
-@media (max-width: 1199.98px) {
-  .hero-left { overflow: hidden; } /* itt jó, ha mindent a hasáb vág */
-  .hero-left .lottie-bg {
-    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
-            mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
-  }
-}
-
-/* XL+: NE vágjuk felül-alul, csak a jobb szélhez tegyünk minimális „védő” vágást */
-@media (min-width: 1200px) {
-  .hero-left { overflow: visible; } /* ne vágjuk le felül/alul */
-  .hero-left .lottie-bg {
-    /* jobb szél felé halványodik, hogy ne folyjon át a szöveg oszlopába */
-    -webkit-mask-image: linear-gradient(to right, #000 92%, transparent 100%);
-            mask-image: linear-gradient(to right, #000 92%, transparent 100%);
-  }
-}
 
 
 /* XS–LG: alul vágás, de színesség marad */
@@ -461,27 +366,13 @@ body{ background:#f4f8fc; }
   }
 }
 
-.hero-left .lottie-bg dotlottie-wc {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 100%;
-  min-height: 100%;
-}
 
 
-.hero-left .lottie-bg dotlottie-wc{
-  transform: scale(1.2) !important;   /* ne tudja lenullázni a noTransform */
-  animation: none;                     /* ne kapjon VÉLETLEN külső CSS animot */
-}
 
+/* --- KL Hero Lottie: végleges, ütközésmentes verzió --- */
+.hero-left { position: relative; }
 
-.hero-left .lottie-bg dotlottie-wc{
-  display:block;
-  width:100%;
-  height:100%;
-}
-.hero-left { position:relative; }
+/* háttérként, mindig legyen méret */
 .hero-left .lottie-bg{
   position:absolute;
   inset:-30% -5% auto -30%;
@@ -489,8 +380,18 @@ body{ background:#f4f8fc; }
   height:160%;
   pointer-events:none;
   z-index:0;
+  overflow:hidden;
 }
-.hero-left .left-content{ position:relative; z-index:1; }
+
+/* a host mérete – ez számít! */
+.hero-left .lottie-bg dotlottie-wc{
+  display:block;
+  width:100%;
+  height:100%;
+  transform:scale(1.15);
+}
+
+
 
 @media (max-width: 576px) {
   .ratio.ratio-16x9 {
@@ -503,3 +404,34 @@ body{ background:#f4f8fc; }
     min-height: 240px; /* vagy amekkora jól néz ki */
   }
 }
+
+/* --- Lottie védőréteg: semmi util ne tudja lenullázni --- */
+.hero-left .lottie-bg { position:absolute; inset:-30% -5% auto -30%; width:160%; height:160%; pointer-events:none; z-index:0; overflow:hidden; }
+
+.hero-left .lottie-bg,
+.hero-left .lottie-bg dotlottie-wc {
+  display:block !important;
+  visibility:visible !important;
+}
+
+.hero-left .lottie-bg dotlottie-wc {
+  width:100% !important;
+  height:100% !important;
+  transform:scale(1.15) !important; /* a .noTransform ellen is */
+}
+
+@media (max-width: 1199.98px){
+  .hero-left { overflow:hidden; }
+  .hero-left .lottie-bg {
+    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+  }
+}
+@media (min-width: 1200px){
+  .hero-left { overflow:visible; }
+  .hero-left .lottie-bg {
+    -webkit-mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+  }
+}
+

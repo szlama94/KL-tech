@@ -635,84 +635,105 @@
   .controller('homeController', [
   '$scope', 
   '$timeout', 
+  '$rootScope', 
+  '$injector', 
   'http',
-  function ($scope, $timeout, http) {
+    function ($scope, $timeout, $rootScope, $injector, http) {
 
+      $scope.heroImages = [];
+      $scope.heroStart  = 0;
+      $scope.lottieReady = false;
 
-        // --- itt a legelején takarítunk ---
-      (function cleanupGlobalFlags() {
-        const targets = [document.body, document.documentElement,
-                        document.querySelector('#app'), 
-                        document.querySelector('.page'),
-                        document.querySelector('.hero-left')].filter(Boolean);
-        const bad = ['noTransform','noAnimation','animPaused','noTransition'];
-        targets.forEach(t => bad.forEach(c => t.classList.remove(c)));
-      })();
+      // 1) képek betöltése
+      http.request('./php/main-carousel.php')
+        .then(function (resp) {
+          var arr = (resp && resp.gallery) ? resp.gallery : [];
+          $scope.heroImages = arr.map(function(name, i){
+            return { src: 'media/image/main_carousel/' + name, alt: 'Hero ' + (i+1) };
+          });
 
+          // Várjuk meg az ng-repeat DOM-ot
+          $scope.$evalAsync(function () {
+            // ha nincs kép, akkor is rajtahagyjuk a Lottie-t (fallback)
+            if ($scope.heroImages.length === 0) {
+              mountCarouselThenLottie();
+            } else {
+              // az első kép tényleges betöltése után mountoljuk a Lottie-t
+              waitFirstImageLoaded('#heroCarousel .carousel-item img', function () {
+                mountCarouselThenLottie();
+              });
+            }
+          });
+        })
+        .catch(function (e) { console.error(e); });
 
-    $scope.heroImages = [];
-    $scope.heroStart  = 0; // indulhat 0-ról, a PHP már keveri a sorrendet
-
-    // --- Bootstrap carousel init, csak ha már van DOM + item ---
-    function initCarousel(retries){
-      $timeout(function(){
-        var el = document.getElementById('heroCarousel');
-        if (!el) {
-          if ((retries||0) > 0) return initCarousel(retries-1);
-          return;
-        }
-        var items = el.querySelectorAll('.carousel-item');
-        if (!items || items.length === 0) {
-          if ((retries||0) > 0) return initCarousel(retries-1);
-          return;
-        }
-
-        if (window.bootstrap && bootstrap.Carousel) {
-          var inst = bootstrap.Carousel.getInstance(el);
-          if (!inst) {
-            inst = new bootstrap.Carousel(el, {
-              interval: 3500,
-              pause: false,
-              wrap: true,
-              touch: true
-            });
-          }
-          inst.to($scope.heroStart || 0); // ugorjunk a kezdő diára
-          inst.cycle();                   // és kezdje el pörgetni
-        }
-      }, 0);
-    }
-
-    // --- Képek betöltése a backendre támaszkodva (PHP kever) ---
-    http.request('./php/main-carousel.php')
-      .then(function (response) {
-        var arr = (response && response.gallery) ? response.gallery : [];
-        $scope.heroImages = arr.map(function(name, i){
-          return {
-            src: 'media/image/main_carousel/' + name,
-            alt: 'Hero kép ' + (i+1)
-          };
+      function waitFirstImageLoaded(selector, cb){
+        var img = document.querySelector(selector);
+        if (!img) { return cb(); }
+        if (img.complete && img.naturalWidth > 0) { return cb(); }
+        img.addEventListener('load', function onload(){
+          img.removeEventListener('load', onload);
+          cb();
         });
-
-        // Várjuk meg, míg az ng-repeat DOM-ot rajzol, aztán indítunk
-        $scope.$evalAsync(function(){
-          initCarousel(10); // max 10 próbálkozás
-        });
-      })
-      .catch(function (e) {
-        console.error(e);
-      });
-
-
-    // --- ÚJRATÖLTÉS, ha home state-re váltunk ---
-    $scope.$on('$stateChangeSuccess', function(event, toState) {
-      if (toState.name === "home") {
-        setTimeout(function() {
-          window.location.reload();
-        }, 50);
+        img.addEventListener('error', function(){ cb(); });
       }
-    });
 
-  }
-]);
+      function initCarousel(){
+        var el = document.getElementById('heroCarousel');
+        if (!el || !window.bootstrap || !bootstrap.Carousel) return;
+        var inst = bootstrap.Carousel.getInstance(el);
+        if (!inst) {
+          inst = new bootstrap.Carousel(el, {
+            interval: 3500, pause: false, wrap: true, touch: true
+          });
+        }
+        inst.to($scope.heroStart || 0);
+        inst.cycle();
+      }
+
+      function mountCarouselThenLottie(){
+        // előbb legyen meg a carousel mérete
+        $timeout(function(){
+          initCarousel();
+          // majd egy tick múlva jöhet a Lottie (ekkor már nem 0px a magasság)
+          $timeout(function(){
+            $scope.lottieReady = false;   // force remount
+            $scope.$evalAsync(function(){
+              $scope.lottieReady = true;
+              // némelyik dotlottie-wc csak window resize-re méretez újra
+              $timeout(function(){ window.dispatchEvent(new Event('resize')); }, 0);
+            });
+          }, 0);
+        }, 0);
+      }
+
+      // 2) visszanavigáláskor is remount (ui-router 0.x)
+      var offState = $rootScope.$on('$stateChangeSuccess', function (e, to) {
+        if (to && to.name === 'home') {
+          // kis késleltetés: a view jelenjen meg, a carousel felvegye a magasságát
+          $timeout(function(){ mountCarouselThenLottie(); }, 0);
+        }
+      });
+      $scope.$on('$destroy', offState);
+
+      // 3) ui-router 1.x (ha van)
+      if ($injector.has('$transitions')) {
+        var $transitions = $injector.get('$transitions');
+        var offTrans = $transitions.onSuccess({ to: 'home' }, function () {
+          $timeout(function(){ mountCarouselThenLottie(); }, 0);
+        });
+        $scope.$on('$destroy', offTrans);
+      }
+
+      // 4) kilépéskor vegyük le (tisztán jöjjön vissza)
+      $scope.$on('$destroy', function(){ $scope.lottieReady = false; });
+
+
+      $timeout(function(){
+        var el = document.querySelector('.lottie-bg dotlottie-wc');
+        if (el) { var s = el.getAttribute('src'); el.setAttribute('src', s); }
+      }, 0);
+
+    }
+  ]);
 })(window, angular);
