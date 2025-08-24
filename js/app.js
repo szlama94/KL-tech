@@ -62,12 +62,17 @@
 			});
       $urlRouterProvider.otherwise('/');
 
-      $locationProvider.hashPrefix('');
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: true,
-        rewriteLinks: true
-      });
+
+      //Ezt akkor kell kikommentálna ha localhoston vagyunk
+      //Ha fent élesben ezt vissza kell állítani a base taggel
+      //együtt az index.html-en!!!!!!!!!!!
+
+      // $locationProvider.hashPrefix('');
+      // $locationProvider.html5Mode({
+      //   enabled: true,
+      //   requireBase: true,
+      //   rewriteLinks: true
+      // });
     }
   ])
 
