@@ -62,8 +62,12 @@
 			});
       $urlRouterProvider.otherwise('/');
 
-      $locationProvider.html5Mode(false);
-      $locationProvider.hashPrefix('!');
+      $locationProvider.hashPrefix('');
+      $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: true,
+        rewriteLinks: true
+      });
     }
   ])
 
